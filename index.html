@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eu te amo 🌹</title>
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --pink:#ff4fa3;
+    --pink2:#ff86c5;
+    --green:#2d8b55;
+    --bg:#120611;
+  }
+  html,body{margin:0;width:100%;height:100%;background:#000;font-family:Arial,sans-serif}
+  body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+  .scene{
+    width:min(100vw,900px);
+    height:min(100vh,900px);
+    aspect-ratio:9/16;
+    max-height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:#070707;
+    border:2px solid #ddd;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* Parte de cima — igual ao estilo do vídeo */
+  .garden{
+    height:57%;
+    min-height:0;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 48%,rgba(255,42,151,.13),transparent 28%),
+      #190718;
+    border-bottom:2px solid #ddd;
+  }
+
+  .garden:after{
+    content:"";
+    position:absolute;inset:0;
+    pointer-events:none;
+    background:radial-gradient(circle at 50% 48%,transparent 0 20%,rgba(0,0,0,.16) 75%);
+  }
+
+  .rose-wrap{
+    position:absolute;
+    width:68%;
+    max-width:390px;
+    aspect-ratio:1/1.22;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+  }
+
+  svg{width:100%;height:100%;overflow:visible}
+
+  .stem{
+    fill:none;
+    stroke:#2f8d58;
+    stroke-width:5;
+    stroke-linecap:round;
+    stroke-dasharray:500;
+    stroke-dashoffset:500;
+    animation:draw 3.8s .2s ease-out forwards;
+  }
+  .stem2{
+    fill:none;stroke:#236c43;stroke-width:2;stroke-linecap:round;
+    stroke-dasharray:400;stroke-dashoffset:400;
+    animation:draw 3.4s .4s ease-out forwards;
+  }
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  .leaf{
+    fill:#2c7f4e;stroke:#45a968;stroke-width:1.4;
+    opacity:0;transform-box:fill-box;transform-origin:center;
+    animation:leaf .9s ease-out forwards;
+  }
+  .leaf.l1{animation-delay:2.2s}.leaf.l2{animation-delay:2.7s}
+  @keyframes leaf{from{opacity:0;transform:scale(.1)}to{opacity:1;transform:scale(1)}}
+
+  .petal{
+    fill:none;
+    stroke:var(--pink);
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    stroke-dasharray:360;
+    stroke-dashoffset:360;
+    animation:petal 1.25s ease-out forwards;
+  }
+  .fillpetal{
+    fill:rgba(255,62,160,.20);
+    stroke:var(--pink);
+  }
+  .p1{animation-delay:3.1s}.p2{animation-delay:3.45s}.p3{animation-delay:3.8s}
+  .p4{animation-delay:4.15s}.p5{animation-delay:4.5s}.p6{animation-delay:4.85s}
+  .p7{animation-delay:5.2s}.p8{animation-delay:5.55s}.p9{animation-delay:5.9s}
+  .p10{animation-delay:6.25s}.p11{animation-delay:6.6s}.p12{animation-delay:6.95s}
+  .p13{animation-delay:7.3s}.p14{animation-delay:7.65s}.p15{animation-delay:8s}
+  @keyframes petal{
+    0%{opacity:0;stroke-dashoffset:360;transform:scale(.25)}
+    55%{opacity:1}
+    100%{opacity:1;stroke-dashoffset:0;transform:scale(1)}
+  }
+
+  .core{
+    fill:#ffb9df;
+    opacity:0;
+    filter:drop-shadow(0 0 8px var(--pink));
+    animation:core .8s 8.25s forwards;
+  }
+  @keyframes core{to{opacity:1}}
+
+  .spark{
+    fill:#ff9bd0;
+    opacity:0;
+    animation:spark 2s ease-in-out infinite;
+  }
+  .s1{animation-delay:9s}.s2{animation-delay:9.5s}.s3{animation-delay:10s}
+  @keyframes spark{
+    0%,100%{opacity:0;transform:translateY(5px)}
+    45%{opacity:.8}
+    70%{opacity:0;transform:translateY(-20px)}
+  }
+
+  .message{
+    position:absolute;
+    left:8%;right:8%;bottom:7%;
+    text-align:center;
+    color:var(--pink2);
+    font-family:Georgia,serif;
+    font-size:clamp(15px,3.2vw,27px);
+    line-height:1.25;
+    text-shadow:0 0 12px rgba(255,79,163,.45);
+    opacity:0;
+    transform:translateY(10px);
+    animation:message 1.6s 10.5s ease-out forwards;
+    z-index:5;
+  }
+  @keyframes message{to{opacity:1;transform:translateY(0)}}
+
+  /* Parte de baixo — editor */
+  .editor{
+    height:43%;
+    position:relative;
+    overflow:hidden;
+    background:#0d0f12;
+    color:#c9ced6;
+    font:12px/1.45 "Consolas","Courier New",monospace;
+  }
+  .tabs{
+    height:30px;background:#15181d;border-bottom:1px solid #252a31;
+    display:flex;align-items:center;padding:0 12px;gap:14px;color:#7f8792;
+  }
+  .tab{color:#d9dde3;border-bottom:2px solid var(--pink);height:30px;display:flex;align-items:center}
+  .editor-main{display:flex;height:calc(100% - 30px)}
+  .gutter{
+    width:42px;text-align:right;padding:8px 8px 0 0;color:#4f5660;
+    user-select:none;background:#0b0d10;
+  }
+  .code{
+    flex:1;padding:8px 12px;white-space:pre;overflow:hidden;
+  }
+  .kw{color:#c586c0}.fn{color:#dcdcaa}.str{color:#ce9178}
+  .num{color:#b5cea8}.var{color:#9cdcfe}.com{color:#6a9955}
+  .cursor{display:inline-block;width:7px;height:15px;background:#ddd;vertical-align:-3px;animation:blink .8s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  @media(max-width:500px){
+    .scene{width:100vw;height:100vh;border:0}
+    .garden{border-bottom:1px solid #bbb}
+    .editor{font-size:9px;line-height:1.35}
+    .gutter{width:30px;padding-right:5px}
+    .code{padding-left:7px}
+    .tabs{height:25px}.tab{height:25px}
+  }
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <section class="garden">
+    <div class="rose-wrap">
+      <svg viewBox="0 0 400 490">
+        <!-- caule -->
+        <path class="stem" d="M205 450 C205 390 198 330 205 260 C210 230 205 215 201 190"/>
+        <path class="stem2" d="M205 450 C215 385 203 320 208 260"/>
+
+        <!-- folhas -->
+        <path class="leaf l1" d="M204 350 C157 327 118 342 105 374 C143 383 177 372 204 350Z"/>
+        <path class="leaf l2" d="M204 310 C247 282 283 294 292 324 C256 334 226 326 204 310Z"/>
+
+        <!-- rosa: linhas simples, desenhadas uma por uma -->
+        <g transform="translate(202 188)">
+          <path class="petal fillpetal p1" d="M0 5 C-58 -5 -73 -55 -45 -77 C-18 -98 20 -73 24 -38 C28 -12 16 -2 0 5Z"/>
+          <path class="petal fillpetal p2" d="M4 2 C-25 -47 -8 -83 24 -85 C59 -87 70 -50 48 -22 C33 -3 16 3 4 2Z"/>
+          <path class="petal fillpetal p3" d="M8 3 C55 -25 83 -8 87 22 C91 55 54 68 24 48 C4 34 2 15 8 3Z"/>
+          <path class="petal fillpetal p4" d="M4 7 C53 40 46 75 17 88 C-14 101 -39 74 -28 42 C-20 19 -3 7 4 7Z"/>
+          <path class="petal fillpetal p5" d="M-2 5 C-48 42 -77 25 -80 -8 C-82 -42 -48 -55 -20 -37 C2 -23 5 -5 -2 5Z"/>
+          <path class="petal p6" d="M-8 0 C-47 -20 -47 -49 -26 -61 C-5 -72 17 -56 19 -33 C21 -14 8 -2 -8 0Z"/>
+          <path class="petal p7" d="M3 0 C-8 -39 10 -61 32 -56 C55 -51 59 -25 42 -9 C28 4 11 7 3 0Z"/>
+          <path class="petal p8" d="M7 4 C41 -14 63 2 59 23 C55 45 29 49 11 34 C0 24 0 10 7 4Z"/>
+          <path class="petal p9" d="M2 8 C21 33 8 57 -12 55 C-35 53 -42 28 -27 11 C-18 1 -4 1 2 8Z"/>
+          <path class="petal p10" d="M-3 5 C-31 24 -52 8 -48 -12 C-44 -32 -21 -39 -5 -25 C7 -15 5 -1 -3 5Z"/>
+          <path class="petal p11" d="M0 3 C-11 -19 2 -38 20 -35 C38 -32 42 -13 30 -2 C19 8 6 10 0 3Z"/>
+          <path class="petal p12" d="M3 4 C19 -14 39 -7 41 9 C43 25 28 34 14 26 C4 20 0 10 3 4Z"/>
+          <path class="petal p13" d="M1 6 C14 18 9 34 -5 35 C-20 36 -28 20 -20 9 C-15 1 -4 0 1 6Z"/>
+          <path class="petal p14" d="M-2 5 C-13 15 -27 10 -28 -2 C-29 -14 -17 -20 -7 -14 C1 -9 2 1 -2 5Z"/>
+          <path class="petal p15" d="M0 3 C-4 -7 2 -15 11 -13 C20 -11 22 -2 16 4 C10 10 2 9 0 3Z"/>
+          <circle class="core" r="8"/>
+        </g>
+
+        <circle class="spark s1" cx="122" cy="125" r="2"/>
+        <circle class="spark s2" cx="287" cy="154" r="2"/>
+        <circle class="spark s3" cx="278" cy="105" r="1.5"/>
+      </svg>
+    </div>
+
+    <div class="message">eu te amo até nos dias mais simples</div>
+  </section>
+
+  <section class="editor">
+    <div class="tabs"><span class="tab">🌹 rosa.html</span><span>×</span></div>
+    <div class="editor-main">
+      <div class="gutter" id="numbers"></div>
+      <div class="code" id="code"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+const lines = [
+  '<span class="kw">const</span> <span class="var">rosa</span> = {',
+  '  <span class="var">cor</span>: <span class="str">"#ff4fa3"</span>,',
+  '  <span class="var">amor</span>: <span class="str">"infinito"</span>,',
+  '};',
+  '',
+  '<span class="fn">desenharCaule</span>();',
+  '<span class="fn">desenharFolhas</span>();',
+  '<span class="fn">desenharPetalas</span>();',
+  '',
+  '<span class="kw">for</span> (<span class="kw">const</span> <span class="var">petala</span> <span class="kw">of</span> <span class="var">rosa</span>) {',
+  '  <span class="fn">animar</span>(<span class="var">petala</span>);',
+  '}',
+  '',
+  '<span class="fn">escrever</span>(<span class="str">"eu te amo até nos dias mais simples"</span>);',
+  '',
+  '<span class="com">// feita especialmente para você ♥</span>'
+];
+
+const code = document.getElementById('code');
+const numbers = document.getElementById('numbers');
+
+lines.forEach((_,i)=>numbers.innerHTML += (i+1)+'<br>');
+
+let i=0, char=0;
+function typeCode(){
+  if(i >= lines.length) return;
+  const text = lines[i];
+  // Mantém o HTML colorido e revela a linha inteira suavemente.
+  if(char === 0){
+    const row=document.createElement('div');
+    row.innerHTML=text || '&nbsp;';
+    row.style.opacity='0';
+    row.style.transform='translateX(-4px)';
+    row.style.transition='opacity .25s, transform .25s';
+    code.appendChild(row);
+    requestAnimationFrame(()=>{row.style.opacity='1';row.style.transform='translateX(0)'});
+  }
+  char++;
+  if(char > 18 || text.length < 18){
+    i++; char=0;
+    setTimeout(typeCode, 120);
+  }else{
+    setTimeout(typeCode, 38);
+  }
+}
+setTimeout(typeCode, 450);
+</script>
+</body>
+</html>
